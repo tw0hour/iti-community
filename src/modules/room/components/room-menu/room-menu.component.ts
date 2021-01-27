@@ -6,7 +6,7 @@ import { Room } from '../../room.model';
 import { RoomStore } from '../../room.store';
 import { RoomQueries } from '../../services/room.queries';
 import { RoomService } from '../../services/room.service';
-
+import { RoomSocketService } from '../../services/room.socket.service';
 @Component({
   selector: 'app-room-menu',
   templateUrl: './room-menu.component.html',
@@ -17,13 +17,12 @@ export class RoomMenuComponent implements OnInit {
 
   rooms: Room[];
 
-  constructor(private feedStore: FeedStore, private queries: RoomQueries, private roomService: RoomService, private router: Router) {
+  constructor(private feedStore: FeedStore, private queries: RoomQueries, private roomSocketService: RoomSocketService) {
     this.roomId$ = feedStore.roomId$;
     this.rooms = [];
   }
 
   async ngOnInit() {
-
     this.rooms = await this.queries.getAll();
   }
 
