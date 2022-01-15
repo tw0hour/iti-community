@@ -7,6 +7,7 @@ import { FeedSocketService } from '../../services/feed.socket.service';
 @Component({
   selector: 'app-feed',
   templateUrl: './feed.component.html',
+  providers: [FeedSocketService],
   styleUrls: ['./feed.component.less']
 })
 export class FeedComponent implements OnInit {

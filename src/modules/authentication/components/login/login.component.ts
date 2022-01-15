@@ -43,7 +43,6 @@ export class LoginComponent implements OnInit {
     }
 
     try {
-      // TODO vérifier le résultat de l'authentification. Rediriger sur "/" en cas de succès ou afficher une erreur en cas d'échec
       const result = await this.authService.authenticate(this.model.username, this.model.password);
 
       if(result.success){

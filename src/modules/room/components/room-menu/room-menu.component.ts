@@ -17,16 +17,24 @@ export class RoomMenuComponent implements OnInit {
 
   rooms: Room[];
 
-  constructor(private feedStore: FeedStore, private queries: RoomQueries, private roomSocketService: RoomSocketService) {
+  constructor(private router: Router,private feedStore: FeedStore, private queries: RoomQueries, private roomSocketService: RoomSocketService) {
     this.roomId$ = feedStore.roomId$;
     this.rooms = [];
   }
 
   async ngOnInit() {
     this.rooms = await this.queries.getAll();
+    if (localStorage.getItem('roomId')){
+      this.router.navigate(['/app' + localStorage.getItem('roomId')]);
+    }
+    if (!this.feedStore.value.roomId){
+      this.goToRoom(this.rooms[0]);
+      return;
+    }
   }
 
   goToRoom(room: Room) {
-    // TODO naviguer vers app/[id de la room]
+    localStorage.setItem('roomId', room.id);
+    this.router.navigate(['/app' + room.id]);
   }
 }
