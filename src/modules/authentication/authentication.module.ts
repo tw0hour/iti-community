@@ -13,6 +13,7 @@ import { AuthenticationService } from './services/authentication.service';
 import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpAuthenticationCommands } from './services/plateform/http/authentication.commands.http';
 import { AuthenticationInterceptor } from './authentication.interceptor';
+import {RouterModule} from "@angular/router";
 
 @NgModule({
   declarations: [LoginComponent],
@@ -31,13 +32,14 @@ import { AuthenticationInterceptor } from './authentication.interceptor';
     AuthenticationStore,
     AuthenticationStorage,
   ],
-  imports: [
-    HttpClientModule,
-    CommonModule,
-    FormsModule,
-    NzFormModule,
-    NzButtonModule,
-    NzMessageModule
-  ]
+    imports: [
+        HttpClientModule,
+        CommonModule,
+        FormsModule,
+        NzFormModule,
+        NzButtonModule,
+        NzMessageModule,
+        RouterModule
+    ]
 })
 export class AuthenticationModule { }

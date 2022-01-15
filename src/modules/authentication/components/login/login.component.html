@@ -5,7 +5,7 @@
       <nz-form-control>
         <!--
           TODO Ajouter l'input pour username avec le data-binding approprié
-          <input class="ant-input" type="text" name="username" id="username" #username="ngModel">
+          <input class="ant-input" type="text" name="username" id="username" #username="ngModel" [(ngModel)]="model.username>
          -->
 
       </nz-form-control>
@@ -29,5 +29,5 @@
   <p class="divider">Pas encore enregistré ?</p>
 
   <!-- TODO Rediriger sur la page de login au clic sur le bouton -->
-  <button class="register-button" nz-button nzType="primary">Créer un compte</button>
+  <button class="register-button" nz-button nzType="primary"  (click)="goToRegistration()">Créer un compte</button>
 </div>
