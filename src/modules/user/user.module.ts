@@ -16,10 +16,8 @@ import { LocalUserQueries } from './services/platform/local/user.queries.local';
 import { UserStore } from './user.store';
 import { UserCommands } from './services/user.commands';
 import { LocalUserCommands } from './services/platform/local/user.commands.local';
-import { HttpUserQueries } from './services/platform/http/user.queries.http';
-import { HttpUserCommands } from './services/platform/http/user.commands.http';
-import { NotificationModule } from '../notification/notification.module';
-import {RouterModule} from "@angular/router";
+
+
 
 @NgModule({
   declarations: [UserRegistrationComponent, UserWidgetComponent, UserProfileModalComponent],
@@ -36,17 +34,15 @@ import {RouterModule} from "@angular/router";
       useClass: LocalUserCommands
     }
   ],
-    imports: [
-        CommonModule,
-        FormsModule,
-        NzFormModule,
-        NzButtonModule,
-        NzIconModule,
-        NzModalModule,
-        NzBadgeModule,
-        NzUploadModule,
-        NotificationModule,
-        RouterModule
-    ]
+  imports: [
+    CommonModule,
+    FormsModule,
+    NzFormModule,
+    NzButtonModule,
+    NzIconModule,
+    NzModalModule,
+    NzBadgeModule,
+    NzUploadModule
+  ]
 })
 export class UserModule { }

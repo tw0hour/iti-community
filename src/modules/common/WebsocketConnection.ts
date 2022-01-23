@@ -1,13 +1,21 @@
-import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 
-@Injectable()
-export abstract class WebsocketConnection {
-  abstract on(event: string, handler: (...args: any[]) => any): void;
-  abstract off(event: string, handler: (...args: any[]) => any): void;
+export enum WebsocketConnectionState {
+    CONNECTING,
+    OPEN,
+    CLOSING,
+    CLOSED
+}
 
-  abstract emit(event: string, ...args: any[]): void;
+export abstract class WebsocketConnection<T> {
+    public readonly url: string;
+    public readonly state: WebsocketConnectionState;
 
-  abstract connect(accessToken: string): void;
-  abstract disconnect(): void;
-  abstract close(): void;
+    constructor() {
+    }
+
+    protected newMessage(message: T) {
+    }
+
+    abstract close(): void;
 }

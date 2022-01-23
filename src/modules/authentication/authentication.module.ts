@@ -10,20 +10,11 @@ import { AuthenticationCommands } from './services/authentication.commands';
 import { LocalAuthenticationCommands } from './services/plateform/local/LocalAuthenticationCommands';
 import { NzMessageModule } from "ng-zorro-antd/message";
 import { AuthenticationService } from './services/authentication.service';
-import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { HttpAuthenticationCommands } from './services/plateform/http/authentication.commands.http';
-import { AuthenticationInterceptor } from './authentication.interceptor';
-import {RouterModule} from "@angular/router";
 
 @NgModule({
   declarations: [LoginComponent],
   exports: [LoginComponent],
   providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthenticationInterceptor,
-      multi: true
-    },
     {
       provide: AuthenticationCommands,
       useClass: LocalAuthenticationCommands
@@ -32,14 +23,12 @@ import {RouterModule} from "@angular/router";
     AuthenticationStore,
     AuthenticationStorage,
   ],
-    imports: [
-        HttpClientModule,
-        CommonModule,
-        FormsModule,
-        NzFormModule,
-        NzButtonModule,
-        NzMessageModule,
-        RouterModule
-    ]
+  imports: [
+    CommonModule,
+    FormsModule,
+    NzFormModule,
+    NzButtonModule,
+    NzMessageModule
+  ]
 })
 export class AuthenticationModule { }

@@ -17,11 +17,11 @@ export class RoomCreateModalComponent implements OnInit {
   @ViewChild("f")
   form: NgForm;
 
+  isNew: boolean = true;
   isVisible: boolean = false;
   model = new CreateRoomFormModel();
 
   constructor(private roomService: RoomService) {
-
   }
 
   ngOnInit(): void {
@@ -29,7 +29,9 @@ export class RoomCreateModalComponent implements OnInit {
 
   async onOk() {
     if (this.form.form.valid) {
-      await this.roomService.create(this.model.name, this.model.type);
+      // invoquer la méthode create du RoomService
+      let room = await this.roomService.create(this.model.name, this.model.type);
+      this.isNew = true;
       this.close();
     }
   }
@@ -45,5 +47,6 @@ export class RoomCreateModalComponent implements OnInit {
 
   close() {
     this.isVisible = false;
+    this.isNew = false;
   }
 }

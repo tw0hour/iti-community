@@ -1,4 +1,5 @@
 <div class="feed" #feed>
-  <!-- TODO itérer sur les posts en utilisant le pipe | async -->
-  <!-- <app-post ></app-post> -->
+  <!-- itérer sur les posts en utilisant le pipe | async -->
+  <app-post *ngFor="let po of posts$ | async" [post]="po">
+  </app-post>
 </div>

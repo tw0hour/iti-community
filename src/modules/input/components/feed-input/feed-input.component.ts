@@ -26,7 +26,7 @@ export class FeedInputComponent {
   /**
    * Staging file to upload
    */
-  file: File | null = null;
+  file: File | undefined = undefined;
 
   currentMention?: RegExpMatchArray;
 
@@ -42,7 +42,7 @@ export class FeedInputComponent {
    */
   chooseMention(user: User) {
     if (this.currentMention) {
-      this.message = this.message.substr(0, this.currentMention.index! + 1) + user.username + this.message.substr(this.currentMention.index! + this.currentMention[1].length + 1) + " ";
+      this.message = this.message.substr(0, this.currentMention.index! + 1) + user.username + this.message.substr(this.currentMention.index! + this.currentMention[0].length + 1) + " ";
     }
     this.hideMentionList();
   }
@@ -72,13 +72,21 @@ export class FeedInputComponent {
    */
   onMessageChanged(message: string) {
     this.message = message;
+    const regex = /\@\S+/gmi;
+    let match = null;
+    if (match = regex.exec(message)) {
+      this.searchMentionedUsers(match[0].substring(1));
+      this.showMentionList(match);
+    }else{
+      this.hideMentionList();
+    }
   }
 
   /**
    * Close tag event handler. Trigger when the user wants to remove a file.
    */
   onCloseTag() {
-    this.setFile(null);
+    this.setFile(undefined);
   }
 
   /**
@@ -110,7 +118,7 @@ export class FeedInputComponent {
    * @param e
    */
   onInputKeyUp(e: KeyboardEvent) {
-
+    
   }
 
   async searchMentionedUsers(search: string) {
@@ -129,15 +137,17 @@ export class FeedInputComponent {
       return;
     }
 
-    // TODO émettre  l'évènement "messageSent" via la méthode fireMessageSent
-    // TODO vider la zone de saise avec la méthode clear
+    // émettre  l'évènement "messageSent" via la méthode fireMessageSent
+    this.fireMessageSent();
+    // vider la zone de saise avec la méthode clear
+    this.clear();
   }
 
   /**
    * Set an allowed file to send with the input message
    * @param file The file to send with the message
    */
-  setFile(file: File | null) {
+  setFile(file: File | undefined) {
     this.file = file;
   }
 
@@ -145,7 +155,13 @@ export class FeedInputComponent {
    * Emit the "messageSent" event
    */
   fireMessageSent() {
-    // TODO émettre l'évènement "messageSent"
+    // émettre l'évènement "messageSent"
+    const data: MessageSentEventPayload = {
+      date: new Date(),
+      message: this.message,
+      file: this.file
+    }
+    this.messageSent.emit(data);
   }
 
   /**
@@ -153,7 +169,7 @@ export class FeedInputComponent {
    */
   clear() {
     this.message = "";
-    this.setFile(null);
+    this.setFile(undefined);
     this.inputPopover.hide();
   }
 }

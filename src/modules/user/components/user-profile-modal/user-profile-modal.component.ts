@@ -68,15 +68,25 @@ export class UserProfileModalComponent implements OnInit {
     this.model = new UserProfileForm(this.user);
   }
 
-  get photoUrl(): SafeResourceUrl {
-    return this.sanitizer.bypassSecurityTrustResourceUrl(this.model.photoUrl || "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Unknown_person.jpg/434px-Unknown_person.jpg");
+  get photoUrl(): SafeResourceUrl | undefined {
+    if (this.model.photoUrl) {
+      return this.sanitizer.bypassSecurityTrustResourceUrl(this.model.photoUrl);
+    }
   }
 
   async onOk() {
-    // TODO vérifier si le formulaire est valide
+    // vérifier si le formulaire est valide
+    if (this.form.invalid) {
+      return;
+    }
 
     if (this.model.hasChanged()) {
-      // TODO mettre à jour l'utilisateur via le service
+      // mettre à jour l'utilisateur via le service
+      this.userService.update({
+        id: this.model.id,
+        username: this.model.username,
+        photo: this.model._file,
+      });
     }
 
     this.close();

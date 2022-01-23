@@ -30,6 +30,7 @@ export class LoginComponent implements OnInit {
   }
 
   goToRegistration() {
+    // naviguer vers "/splash/register"
     this.router.navigate(['/splash/register']);
   }
 
@@ -43,16 +44,14 @@ export class LoginComponent implements OnInit {
     }
 
     try {
+      // vérifier le résultat de l'authentification. Rediriger sur "/" en cas de succès ou afficher une erreur en cas d'échec
       const result = await this.authService.authenticate(this.model.username, this.model.password);
-
-      if(result.success){
+      if(result.success)
+      {
         this.router.navigate(['/']);
+      }else{
+        this.nzMessageService.error("Nom d'utilisateur ou mot de passe incorrect");
       }
-      else{
-        this.nzMessageService.error("Echec d'authentifiction");
-      }
-
-
     } catch (e) {
       this.nzMessageService.error("Une erreur est survenue. Veuillez réessayer plus tard");
     }

@@ -16,11 +16,7 @@ export class AuthenticationInterceptor implements HttpInterceptor {
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         if (this.store.accessToken) {
-          req = req.clone({
-            setHeaders: {
-              Authorization: `Bearer ${this.store.accessToken}`
-            }
-          });
+            req.headers.set("Authorization", `Bearer ${this.store.accessToken}`);
         }
 
         return next.handle(req);
